@@ -1,0 +1,63 @@
+{%extends 'blog/basic.html'%}
+{% block css %}
+.mySlides {
+display: none;
+}
+{% endblock %}
+{%block body%}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mt-2">
+            {% for i in banner %}
+            {% if forloop.counter %}
+            <div class="w3-content w3-section" style="max-width: 100%;">
+                <img class="mySlides" src="/media/{{i.blogheroimage}}" style="width:1100px;height: 400px">
+            </div>
+
+            {%endif%}
+            {%endfor%}
+        </div>
+    </div>
+</div>
+<div class="container mt-3">
+    <div class="row my-2">
+        {% for item in myposts %}
+        <div class="col-md-6">
+            <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <strong class="d-inline-block mb-2 text-primary">
+                        {{item.title}}
+                    </strong>
+                    <h3 class="mb-0">{{item.tilte}}</h3>
+                    <div class="mb-1 text-muted">{{item.pub_date}}</div>
+                    <p class="card-text mb-auto">{{item.chead1|slice:"0:150"}}....</p>
+                    <a href="blogpost/{{item.post_id}}" class="stretched-link">Continue reading</a>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                    <img src="/media/{{item.thumbnail}}" class="bd-placeholder-img" width="200" height="250" aria-label="Placeholder: Thumbnail">
+                    <title>Placeholder</title></img>
+                </div>
+            </div>
+        </div>
+        {% if forloop.counter|divisibleby:2%}
+    </div>
+    <div class="row my-2">
+        {%endif%}
+        {%endfor%}</div>
+</div>
+{% block js %}
+<script>
+var slideIndex = 0;
+carousel();
+
+function carousel() {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    for (i = 0; i < x.length; i++) { x[i].style.display = "none"; } slideIndex++;
+    if (slideIndex > x.length) { slideIndex = 1 }
+    x[slideIndex - 1].style.display = "block";
+    setTimeout(carousel, 8000); // Change image every 2 seconds
+}
+</script>
+{% endblock %}
+{%endblock%}
